@@ -125,12 +125,6 @@ pip install fastapi uvicorn pydantic
 uvicorn api:app --host 0.0.0.0 --port 8000
 ```
 
-You should get:
-
-```
-GET / -> {"service": "SegBioModel API", "version": "1.0"}
-```
-
 ---
 
 ## API overview
