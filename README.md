@@ -8,9 +8,9 @@ This repo wraps an nnU-Net v2 training/prediction workflow behind a small FastAP
 
 ```
 .
-├── SegBioModel.py                # Core pipeline class that submits SLURM jobs
-├── api.py                        # FastAPI app exposing training/inference endpoints
 └── scripts/
+    ├── SegBioModel.py                # Core pipeline class that submits SLURM jobs
+    ├── api.py                        # FastAPI app exposing training/inference endpoints
     └── nnunet/
         ├── nnunet_train_template.sl
         ├── nnunet_verify_template.sl
