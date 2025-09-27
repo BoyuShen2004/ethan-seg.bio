@@ -33,7 +33,7 @@ This repo wraps an nnU-Net v2 training/prediction workflow behind a small FastAP
 /projects/.../nnUNet/nnUNet_results/      # trained models + logs
 /projects/.../nnUNet/test_data/           # test/eval inputs (Dataset{ID}_*)
 /projects/.../nnUNet/predictions/         # prediction outputs mirroring test_data names
-/projects/.../scripts/nnunet/             # the 3 SLURM templates (*.sl)
+/projects/.../scripts/nnunet_slurm_templates/             # the 3 SLURM templates (*.sl)
 ```
 
 ---
