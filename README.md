@@ -165,21 +165,30 @@ uvicorn api:app --host 0.0.0.0 --port 8000
 
 ---
 
-## Example calls
+# Example calls (Jupyter Notebook)
 
 > Replace values to match your data IDs and cluster paths. These calls return quickly because job execution happens on SLURM.
 
-### Train
+## Setup
 
-```bash
-curl -X POST http://localhost:8000/train \
-  -H "Content-Type: application/json" \
-  -d '{
-        "modality": "EM",
-        "target": "mitochondria",
-        "dataset_id": "001",
-        "config": "3d"
-      }'
+```python
+import requests, json
+
+BASE = "http://localhost:8000"  # or your server address
+```
+
+## Train
+
+```python
+spec = {
+    "modality": "EM",
+    "target": "mitochondria",
+    "dataset_id": "001",
+    "config": "3d",
+}
+res = requests.post(f"{BASE}/train", json=spec)
+print(res.status_code)
+print(json.dumps(res.json(), indent=2))
 ```
 
 **What happens:**  
@@ -187,14 +196,14 @@ curl -X POST http://localhost:8000/train \
 - Writes `SegBioModel_init_Dataset001.txt`.  
 - Submits training to SLURM unless checkpoints already exist in `nnUNet_results/Dataset001_*`.
 
-### Validate (get mean Dice later)
+## Validate (get mean Dice later)
 
-```bash
-curl http://localhost:8000/validate/001
+```python
+res = requests.get(f"{BASE}/validate/001")
+print(res.status_code)
+print(json.dumps(res.json(), indent=2))
 ```
-
-Returns something like:
-
+Expected shape:
 ```json
 {
   "dataset_id": "001",
@@ -203,22 +212,22 @@ Returns something like:
 }
 ```
 
-### Predict
+## Predict
 
-First, ensure a test dataset exists as `test_data/Dataset001_something/` (the name must match `Dataset{test_data}_*`).
+> Ensure a test dataset exists as `test_data/Dataset001_something/` (the name must match `Dataset{test_data}_*`).
 
-```bash
-curl -X POST http://localhost:8000/inference \
-  -H "Content-Type: application/json" \
-  -d '{
-        "modality": "EM",
-        "target": "mitochondria",
-        "dataset_id": "001",
-        "config": "3d",
-        "test_data": "001"
-      }'
+```python
+spec_infer = {
+    "modality": "EM",
+    "target": "mitochondria",
+    "dataset_id": "001",
+    "config": "3d",
+    "test_data": "001",
+}
+res = requests.post(f"{BASE}/inference", json=spec_infer)
+print(res.status_code)
+print(json.dumps(res.json(), indent=2))
 ```
-
 The job writes results to `predictions/Dataset001_something/`. If files (`*.nii.gz`, `*.npz`, or `*.tif`) already exist there, the API will **skip** re-submitting.
 
 ---
