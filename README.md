@@ -253,7 +253,3 @@ The job writes results to `predictions/Dataset001_something/`. If files (`*.nii.
 5. `POST /train`, then `GET /validate/{ID}`, and `POST /inference` when ready.
 
 ---
-
-## License
-
-MIT (or your preferred open-source license).
